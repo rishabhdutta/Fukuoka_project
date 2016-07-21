@@ -5,8 +5,8 @@ NonlinFO_1
 mbest= 1.0e+03 *  [  0.6026    3.7355    0.6141    3.7291   ...
     0.0138    0.0010   -0.0910   -0.0016    0   0];
 varnum = numel(mbest);
-nsamples = 100000;
-wsize = 10;
+nsamples = 10;
+wsize = 100000;
 X0 = mbest;
 sqrflag=1;
 
@@ -26,16 +26,17 @@ tic
 samples = zeros(nsamples,numel(X0),wsize);
 acceptances = zeros(wsize,1);
 
-for w =1:wsize
+parfor w =1:wsize
     [unburnedsamples(:,:,w),acceptances(w)] = mhsample(X0,nsamples,'pdf',...
         posterior,'proprnd',proprnd,'symmetric',1);
 end
 %warning('on');
 %matlabpool close;
 
+b = toc;
 save('samples_med_again_paper.mat','unburnedsamples','b','-v7.3')
 
-b = toc;
+
 disp('Total time sampling');
 disp('Collected rows per second');
 (wsize*nsamples) / b
@@ -93,7 +94,7 @@ end
 figure;
 for i=1:8
     subplot(4,2,i)
-    plot(underburnedsamples(:,i))
+    plot(unburnedsamples(:,i))
 end
 % 
 % disp('Estimating Geyer time tau, this is a somehwat conservative guess with chain of many million')
