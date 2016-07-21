@@ -26,7 +26,7 @@ tic
 samples = zeros(nsamples,numel(X0),wsize);
 acceptances = zeros(wsize,1);
 
-parfor w =1:wsize
+for w =1:wsize
     [unburnedsamples(:,:,w),acceptances(w)] = mhsample(X0,nsamples,'pdf',...
         posterior,'proprnd',proprnd,'symmetric',1);
 end
