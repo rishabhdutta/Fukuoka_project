@@ -155,7 +155,7 @@ axis equal
 axis(axss2)
 
 subplot(4,4,[11 12 15  16])
- cd ../error_cov/ 
+ cd error_cov/ 
 load error_cov
    %imagesc(SD.lonkm,SD.latkm,undef2);h = colorbar; 
    [rgbim] = PlotAnyRGB(undef2,SD.dem,jet,1.5,[-200 200],c,[1 2]);
@@ -185,7 +185,7 @@ axis(axss3)
  ylabel('covariances InSAR [mm^2]')
  legend('covariogram','covariance function','variance')
 
-   cd ../data/
+   cd ..
    
  %%  
   %figure; % GPS
