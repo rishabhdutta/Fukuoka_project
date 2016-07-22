@@ -106,7 +106,7 @@ load D17_init_GPS_coseis_stack.mat
 load SD.mat
 load FD.mat
 load 22837.dat
-addpath ../bin_util/
+addpath ../../Noor/GPS_D17pt_D246/bin_util/
 
 coastutm = FO_CrdTrans(X22837',1);
 close all; 
