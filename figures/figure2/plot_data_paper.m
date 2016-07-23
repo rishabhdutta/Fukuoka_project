@@ -100,19 +100,22 @@ box on
  %% Figure 2 for the paper
  
  clear all; close all; clc
- 
  addpath ../../Noor/GPS_D17pt_D246/extras/
+ addpath ../../Noor/GPS_D17pt_D246/bin_util/ 
 load D17_init_GPS_coseis_stack.mat
 load SD.mat
 load FD.mat
 load 22837.dat
-addpath ../../Noor/GPS_D17pt_D246/bin_util/
 
 coastutm = FO_CrdTrans(X22837',1);
 close all; 
 
-excl = [ 231   232   236   243   244  358  213  218]; 
+excl = [ 231   232   236   243   244  358  213  218 187]; 
 D17.def(excl) = nan;
+D17.pos.E(excl) = nan; 
+D17.pos.N(excl) = nan;
+D17.pos.lon(excl) = nan;
+D17.pos.lat(excl) = nan;
 
 figure; 
 subplot(4,4,[1 2 5 6])
@@ -155,9 +158,10 @@ axis equal
 axis(axss2)
 
 subplot(4,4,[11 12 15  16])
- cd error_cov/ 
+ addpath error_cov
 load error_cov
    %imagesc(SD.lonkm,SD.latkm,undef2);h = colorbar; 
+   addpath ../
    [rgbim] = PlotAnyRGB(undef2,SD.dem,jet,1.5,[-200 200],c,[1 2]);
    
  imagesc(SD.lonkm,SD.latkm,rgbim)
@@ -185,16 +189,15 @@ axis(axss3)
  ylabel('covariances InSAR [mm^2]')
  legend('covariogram','covariance function','variance')
 
-   cd ..
-   
- %%  
-  %figure; % GPS
-   
-   subplot(4,4,[9 10 13 14])
   
- addpath ../bin_util/
+%%  
+%figure; % GPS
+   
+subplot(4,4,[9 10 13 14])
+  
 load FO_GPS_geonet
 load FO_GPS_TN
+addpath ../../Noor/GPS_D17pt_D246/
 
 exclude = [];
 %ii=find(FO.CGPSxy(1,:)>670);       % Here I find far-eastern stat
@@ -253,8 +256,7 @@ ca = [530         700        3660        3760];
 hold on
   plot(coastutm(1,:),coastutm(2,:),'k','Linewidth',.25)  
    
-  
-  addpath ~/Desktop/softwares/arrows/
+addpath arrows/
 arrows([crdgps(1,1:3:end) 550],[crdgps(2,1:3:end) 3750],[denu(1,:) .1]*100,...
     [denu(2,:) 0]*100,[.2,.2,.15,.01],'Cartesian','FaceColor','r','Ref',15,'EdgeColor','k')
 hold on
