@@ -1,13 +1,318 @@
+%% plot the samples and compare 
+clear; close all; clc
+cd /home/duttar/Desktop/insar/japan/Fukuoka/modeling/new_work/GPS_D17pt_D246/no_prior/
+addpath ../..
+
+load samples_nopriors_again
+no_prior = unburnedsamples; 
+okada_no_prior = change_okada(no_prior); 
+
+cd ../prior_mag_AS/
+load samples_med_again2.mat
+with_prior = unburnedsamples; 
+okada_with_prior = change_okada(with_prior); 
+
+figure; 
+nos= 50;
+for i =1:8
+    subplot(2,4,i)
+    [nx,ny] = hist(with_prior(:,i),nos);
+    plot(ny,nx,'Linewidth',2)
+    set(gca,'YTickLabel',[]);
+    %axis([min(ny) max(ny) min(nx) max(nx)])
+    hold on; 
+    [nx1,ny1] = hist(no_prior(:,i),nos);
+    plot(ny1,nx1,'g','Linewidth',2)
+    axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+end
+
+    
+
+
+
+
+%%
+figure; % figure for the paper 
+
+subplot(4,6,[1 2])
+[nx,ny] = hist(with_prior(:,1),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(no_prior(:,1),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+%ylabel('Longitude [km]')
+%set(get(gca,'YLabel'),'Rotation',0)
+xlabel('West X [km]','FontSize', 12)
+
+subplot(4,6,[3 4])
+[nx,ny] = hist(okada_with_prior(:,6),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(okada_no_prior(:,6),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('Center X [km]','FontSize', 12)
+
+subplot(4,6,[5 6])
+[nx,ny] = hist(with_prior(:,3),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(no_prior(:,3),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('East X [km]','FontSize', 12)
+
+
+subplot(4,6,[7 8])
+[nx,ny] = hist(with_prior(:,2),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(no_prior(:,2),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('West Y [km]','FontSize', 12)
+
+
+subplot(4,6,[9 10])
+[nx,ny] = hist(okada_with_prior(:,7),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(okada_no_prior(:,7),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('Center Y [km]','FontSize', 12)
+
+
+subplot(4,6,[11 12])
+[nx,ny] = hist(with_prior(:,4),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(no_prior(:,4),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('East Y [km]','FontSize', 12)
+
+subplot(4,6,[13 14])
+[nx,ny] = hist(okada_with_prior(:,1),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(okada_no_prior(:,1),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('Length [km]','FontSize', 12)
+
+
+subplot(4,6,[15 16])
+[nx,ny] = hist(okada_with_prior(:,2),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(okada_no_prior(:,2),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('Width [km]','FontSize', 12)
+
+subplot(4,6,[17 18])
+[nx,ny] = hist(okada_with_prior(:,3),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(okada_no_prior(:,3),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('Depth [km]','FontSize', 12)
+
+subplot(4,6,[19 20])
+[nx,ny] = hist(okada_with_prior(:,5),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(okada_no_prior(:,5),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('Strike [°]','FontSize', 12)
+
+
+subplot(4,6,[21 22])
+[nx,ny] = hist(okada_with_prior(:,4),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(okada_no_prior(:,4),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('Dip [°]','FontSize', 12)
+
+
+
+subplot(4,6,[23 24])
+[nx,ny] = hist(okada_with_prior(:,8),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(okada_no_prior(:,8),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('Strike-slip [m]','FontSize', 12)
+
+legend('with priors','no priors','Fontsize',12)
+%%
+
+% plot hyperparameters for the paper
+cd ../prior_mag_checkscales2/
+
+figure; subplot(121)
+figure; % figure for the paper 
+
+subplot(4,6,[1 2])
+[nx,ny] = hist(with_prior(:,1),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(no_prior(:,1),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+%ylabel('Longitude [km]')
+%set(get(gca,'YLabel'),'Rotation',0)
+xlabel('West X [km]','FontSize', 12)
+
+subplot(4,6,[3 4])
+[nx,ny] = hist(okada_with_prior(:,6),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(okada_no_prior(:,6),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('Center X [km]','FontSize', 12)
+
+subplot(4,6,[5 6])
+[nx,ny] = hist(with_prior(:,3),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(no_prior(:,3),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('East X [km]','FontSize', 12)
+
+
+subplot(4,6,[7 8])
+[nx,ny] = hist(with_prior(:,2),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(no_prior(:,2),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('West Y [km]','FontSize', 12)
+
+
+subplot(4,6,[9 10])
+[nx,ny] = hist(okada_with_prior(:,7),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(okada_no_prior(:,7),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('Center Y [km]','FontSize', 12)
+
+
+subplot(4,6,[11 12])
+[nx,ny] = hist(with_prior(:,4),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(no_prior(:,4),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('East Y [km]','FontSize', 12)
+
+subplot(4,6,[13 14])
+[nx,ny] = hist(okada_with_prior(:,1),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(okada_no_prior(:,1),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('Length [km]','FontSize', 12)
+
+
+subplot(4,6,[15 16])
+[nx,ny] = hist(okada_with_prior(:,2),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(okada_no_prior(:,2),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('Width [km]','FontSize', 12)
+
+subplot(4,6,[17 18])
+[nx,ny] = hist(okada_with_prior(:,3),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(okada_no_prior(:,3),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('Depth [km]','FontSize', 12)
+
+subplot(4,6,[19 20])
+[nx,ny] = hist(okada_with_prior(:,5),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(okada_no_prior(:,5),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('Strike [°]','FontSize', 12)
+
+
+subplot(4,6,[21 22])
+[nx,ny] = hist(okada_with_prior(:,4),nos);
+plot(ny,nx,'r','Linewidth',2)
+set(gca,'YTickLabel',[]);
+hold on ;
+[nx1,ny1] = hist(okada_no_prior(:,4),nos);
+plot(ny1,nx1,'b','Linewidth',2)
+axis([min([ny ny1]) max([ny ny1]) min([nx nx1]) max([nx nx1])])
+xlabel('Dip [°]','FontSize', 12)
+
+
+hyperparameters_forpaper
+xlabel('||(d-G(m))^T\Sigma_d^{-1}(d-G(m))||')
+ylabel('||M(m)-6.6||')
+
+cd ../prior_mag_AS_checkscales/
+
+subplot(122)
+hyperparameters_forpaper
+xlabel('||(d-G(m))^T\Sigma_d^{-1}(d-G(m))||')
+
+cd ../prior_mag_AS/
+
 
 %% Data misfit with MAP 
 
-addpath fig_extras
+addpath ../..
 model = 1.0e+03 * [0.6048    3.7359    0.6139    3.7304    0.0174    0.0000   -0.0951   -0.0017         0         0]; 
 model1 = change_okada(model);
 magmodel = momentmag(model1); 
 
-addpath ../../Noor/GPS_D17pt_D246/extras/
-addpath ../../Noor/GPS_D17pt_D246/bin_util/
+
+addpath ../../../data/
+addpath ../../../bin_util/
 
 % figure ; 
 % 
