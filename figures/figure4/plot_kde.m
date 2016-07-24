@@ -22,7 +22,7 @@ subind = [3 4; 5 6; 7 8; 9 10; 11 12;13  14; 15 16;...
    111 112]+16;
 %subind = [2 3 4 5 6 7 8 11 12 13 14 15 16 20 21 22 23 24 29 30 ...
     %31 32 38 39 40 47 48 56];
-addpath ../../../bin_util/
+addpath ../../Noor/GPS_D17pt_D246/bin_util/
 load slipcolor
 
 figure; 
