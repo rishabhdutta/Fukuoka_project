@@ -1,6 +1,9 @@
 
 clear all; close all; clc
 
+addpath bin_util
+addpath extras
+
 NonlinFO_1
 mbest= 1.0e+03 *  [  0.6026    3.7355    0.6141    3.7291   ...
     0.0138    0.0010   -0.0910   -0.0016    0   0];

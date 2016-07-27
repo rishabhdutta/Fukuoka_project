@@ -1,102 +1,3 @@
-
-
-
-% figure for the paper
-
-clear all; close all; clc
-load D17_init_GPS_coseis_stack.mat
-load SD.mat
-load FD.mat
-load 22837.dat
-addpath ../bin_util/
-
-coastutm = FO_CrdTrans(X22837',1);
-close all; 
-
-
-% 1st subplot plots the D17-point targets
-subplot(1,2,1)
-%subplot(4,8,[1,2,3,4,9,10,11,12,17,18,19,20,25,26,27,28])
-
-szFD = size(FD.dem);
-[rgbim] = PlotAnyRGB(zeros(szFD(1),szFD(2)),FD.dem,jet,1.5,[-100 100]);
-imagesc(FD.lonkm,FD.latkm,rgbim)
-axis xy; hold on; 
-scatter(D17.pos.E/1e3,D17.pos.N/1e3,100,D17.def,'.')
-coastutm(2,:) = coastutm(2,:) -.3; 
-coastutm(1,:) = coastutm(1,:) -.37; 
-
-plot(coastutm(1,:),coastutm(2,:),'k','Linewidth',2)
-caxis([min(D17.def) max(D17.def)]);
-c = caxis;
-xlabel('Easting [km]')
-ylabel('Northing [km]')
-
-
-% 2nd suplot plot the D246 
-%subplot(4,8,[5,6,7,8,13,14,15,16,21,22,23,24,29,30,31,32])
-subplot(122)
-[rgbim] = PlotAnyRGB(SD.unw,SD.dem,jet,1.5,[-100 100],c);
- imagesc(SD.lonkm,SD.latkm,rgbim)
- axis xy 
-  hold on
-
-plot(coastutm(1,:),coastutm(2,:),'k','Linewidth',2)
-xlabel('Easting [km]')
-ylabel('Northing [km]')
-
-%%
-% plot the variogram 
-
-cd ../error_cov/ 
-load error_cov
-figure; 
-load slipcolor
-subplot(2,4,[1,2,5,6])
-imagesc(FD.lonkm,FD.latkm,undef1);h = colorbar; 
- ylabel(h,'LOS error [m]','Fontsize',12)
- hold on; axis xy
-plot(coastutm(1,:),coastutm(2,:),'k','Linewidth',2)
-colormap(slipcolor)
-
-axes('Position',[.1 .7 .2 .2])
-box on
-plot(lag1,cov12,'k.')
-hold on 
-z4= [-5:.01:50];
-z5 = limiter(newparameters,z4);
-plot(z4(:),z5(:),'r','Linewidth',2);
-axis([-5 50 -5 45])
- var1 = nanvar(undef1(:))*1e6;
- plot(0,var1,'b+','Linewidth',6)
- xlabel('lag distance [km]')
- ylabel('covariances InSAR [mm^2]')
- legend('covariogram','covariance function','variance')
-
-
- subplot(2,4,[3,4,7,8])
- imagesc(SD.lonkm,SD.latkm,undef2);h = colorbar; 
-  ylabel(h,'LOS error [m]','Fontsize',12)
- hold on
- axis xy
- plot(coastutm(1,:),coastutm(2,:),'k','Linewidth',2)
- colormap(slipcolor)
- 
- axes('Position',[.5 .7 .2 .2])
-box on
- plot(lag2,cov22,'k.')
- hold on 
- z6= [-5:.04:100];
-  z5 = limiter(newparameters2,z6);
-  plot(z6(:),z5(:),'r','Linewidth',2);
-  axis([-5 50 -5 30])
-  var2 = nanvar(undef2(:))*1e6;
-   plot(0,var2,'b+','Linewidth',6)
-  xlabel('lag distance [km]')
- ylabel('covariances InSAR [mm^2]')
- legend('covariogram','covariance function','variance')
- 
- 
  %% Figure 2 for the paper
  
  clear all; close all; clc
@@ -211,7 +112,7 @@ FN.CGPSenu = [FN.CGPSenu FOtn.GPSenu];
 FN.CGPSerr = [FN.CGPSerr FOtn.GPSerr];
 FN.CGPScov = BlockDiag(FN.CGPScov,FOtn.GPScov);
 FN.CGPSxy  = [FN.CGPSxy FOtn.GPSxy];
-clear FO FOtn
+
    
 denu    = FN.CGPSenu;
 derr    = FN.CGPSerr;
@@ -257,12 +158,16 @@ hold on
   plot(coastutm(1,:),coastutm(2,:),'k','Linewidth',.25)  
    
 addpath arrows/
-arrows([crdgps(1,1:3:end) 550],[crdgps(2,1:3:end) 3750],[denu(1,:) .1]*100,...
-    [denu(2,:) 0]*100,[.2,.2,.15,.01],'Cartesian','FaceColor','r','Ref',15,'EdgeColor','k')
+% arrows([crdgps(1,1:3:end) 550],[crdgps(2,1:3:end) 3750],[denu(1,:) .1]*100,...
+%    [denu(2,:) 0]*100,[.2,.2,.15,.01],'Cartesian','FaceColor','r','Ref',15,'EdgeColor','k')
+[abc1] = arrows(FO.CGPSxy(1,:),FO.CGPSxy(2,:),FO.CGPSenu(1,:)*100,FO.CGPSenu(2,:)*100,[.2,.2,.15,.01],'Cartesian','FaceColor','r','Ref',15,'EdgeColor','k');
 hold on
+[abc2] = arrows(FOtn.GPSxy(1,:),FOtn.GPSxy(2,:),FOtn.GPSenu(1,:)*100,FOtn.GPSenu(2,:)*100,[.2,.2,.15,.01],'Cartesian','FaceColor','m','Ref',15,'EdgeColor','k');
+arrows(550,3750,10,0,[.2,.2,.15,.01],'Cartesian','FaceColor','k','Ref',15,'EdgeColor','k')
 %quiver(crdgps(1,),crdgps(2,1:82),denu(1,:)*100, denu(2,:)*100)
 %scatter(crdgps(1,1:3:end),crdgps(2,1:3:end),300,denu(3,:),'.')
   
+legend([abc1,abc2],'Continuous GPS stations','Campaign GPS stations')
 %caxis([ min(denu(3,:))  max(denu(3,:))])
 caxis([min(D17.def) max(D17.def)]);
 

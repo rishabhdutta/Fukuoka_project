@@ -219,7 +219,7 @@ disp(['---> Using InSAR std of : ',num2str(1e2*SARSTD),' cm']);
 COVinv     = inv(DataCov);
 W          = chol(COVinv);
 %exclude points 
-excl = [ 231   232   236   243   244];    %removed1
+excl = [ 231   232   236   243   244  358  213  218 187];    %removed1
  %excl = [243   244   272   277   281   282 ...
   %   290   291   293   298   299   300   301]; % removed2 (more than 4cm )
 for i = 1:length(excl)
