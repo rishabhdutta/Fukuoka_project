@@ -120,6 +120,9 @@ axis equal; axis(ca)
 xlabel('Easting [km]')
 ylabel('Northing [km]')
 
+clbar = colorbar; 
+ylabel(clbar,'LOS displacement [m]')
+
 subplot(4,6,[15 16 21 22])
 % calculate predicted data
 ind1 = find(isnan(SD.unw(:))==0); 

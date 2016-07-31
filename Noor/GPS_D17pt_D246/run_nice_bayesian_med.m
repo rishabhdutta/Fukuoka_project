@@ -8,8 +8,8 @@ NonlinFO_1
 mbest= 1.0e+03 *  [  0.6026    3.7355    0.6141    3.7291   ...
     0.0138    0.0010   -0.0910   -0.0016    0   0];
 varnum = numel(mbest);
-nsamples = 10;
-wsize = 100000;
+nsamples = 100000;
+wsize = 10;
 X0 = mbest;
 sqrflag=1;
 
@@ -52,61 +52,61 @@ disp('Merging and burning chains');
 
 samples = unburnedsamples(round(0.10*size(samples,1)):end,:,:); %burn in removed
 unburnedsamples = reshape(permute(samples, [1 3 2]),size(samples,1)*size(samples,3),size(samples,2));
-
-for i=1:8
-    if i==1
-        subplot(4,2,i)
-        hist(unburnedsamples(:,i),1000);
-        h = findobj(gca,'Type','patch');
-        set(h,'FaceColor','r','EdgeColor','r')
-
-        xlabel('X-loc left [km]')
-    elseif i==2
-        subplot(4,2,i)
-        hist(unburnedsamples(:,i),1000);
-        xlabel('Y-loc left [km]')
-    elseif i==3
-        subplot(4,2,i)
-        hist(unburnedsamples(:,i),1000);
-        xlabel('X-loc right [km]')
-    elseif i==4
-        subplot(4,2,i)
-        hist(unburnedsamples(:,i),1000);
-        xlabel('Y-loc right [degree]')
-    elseif i==5
-        subplot(4,2,i)
-        hist(unburnedsamples(:,i),1000);
-        xlabel('width [degree]')
-    elseif i==6
-        subplot(4,2,i)
-        hist(unburnedsamples(:,i),1000);
-        xlabel('depth [0.1km]')
-    elseif i==7
-        subplot(4,2,i)
-        hist(unburnedsamples(:,i),1000);
-        xlabel('dip [0.1km]')
-    elseif i==8
-        
-        subplot(4,2,i)
-        hist(unburnedsamples(:,i),1000);
-        xlabel('strikeslip')
-    end
-    
-end
-
-figure;
-for i=1:8
-    subplot(4,2,i)
-    plot(unburnedsamples(:,i))
-end
 % 
-% disp('Estimating Geyer time tau, this is a somehwat conservative guess with chain of many million')
-% disp('Probably you can well do with less thinning. But with a chain of tens of thousands, it might be too little.')
+% for i=1:8
+%     if i==1
+%         subplot(4,2,i)
+%         hist(unburnedsamples(:,i),1000);
+%         h = findobj(gca,'Type','patch');
+%         set(h,'FaceColor','r','EdgeColor','r')
 % 
-% TF = max(geyer_imse(unburnedsamples(:,1:8)))
-
-
-
-% map value 818813
-% map =  1.0e+03 * [0.6048    3.7359    0.6139    3.7304    0.0174    0.0000   -0.0951   -0.0017         0         0]; 
-
+%         xlabel('X-loc left [km]')
+%     elseif i==2
+%         subplot(4,2,i)
+%         hist(unburnedsamples(:,i),1000);
+%         xlabel('Y-loc left [km]')
+%     elseif i==3
+%         subplot(4,2,i)
+%         hist(unburnedsamples(:,i),1000);
+%         xlabel('X-loc right [km]')
+%     elseif i==4
+%         subplot(4,2,i)
+%         hist(unburnedsamples(:,i),1000);
+%         xlabel('Y-loc right [degree]')
+%     elseif i==5
+%         subplot(4,2,i)
+%         hist(unburnedsamples(:,i),1000);
+%         xlabel('width [degree]')
+%     elseif i==6
+%         subplot(4,2,i)
+%         hist(unburnedsamples(:,i),1000);
+%         xlabel('depth [0.1km]')
+%     elseif i==7
+%         subplot(4,2,i)
+%         hist(unburnedsamples(:,i),1000);
+%         xlabel('dip [0.1km]')
+%     elseif i==8
+%         
+%         subplot(4,2,i)
+%         hist(unburnedsamples(:,i),1000);
+%         xlabel('strikeslip')
+%     end
+%     
+% end
+% 
+% figure;
+% for i=1:8
+%     subplot(4,2,i)
+%     plot(unburnedsamples(:,i))
+% end
+% % 
+% % disp('Estimating Geyer time tau, this is a somehwat conservative guess with chain of many million')
+% % disp('Probably you can well do with less thinning. But with a chain of tens of thousands, it might be too little.')
+% % 
+% % TF = max(geyer_imse(unburnedsamples(:,1:8)))
+% 
+% 
+% 
+% % map value 818813
+% % map =  1.0e+03 * [0.6048    3.7359    0.6139    3.7304    0.0174    0.0000   -0.0951   -0.0017         0         0]; 
+% 

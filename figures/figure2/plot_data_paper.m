@@ -73,6 +73,7 @@ load error_cov
  axss3 = axis; 
 axis equal
 axis(axss3)
+set(gca,'yaxislocation','right');
  
  %colormap(slipcolor)
  
