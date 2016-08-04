@@ -1,8 +1,11 @@
 % plot the 2D kernel densities with the marginals 
-
+close all 
 addpath ~/Desktop/softwares/gkde2/
 addpath ~/Desktop/softwares/mcmcdiag/
-load samples_med_again2
+load samples_med_again_paper
+unburnedsamples(:,7:8) = -unburnedsamples(:,7:8);
+mbest = [602.2086 3.7364e+03 615.0846 3.7290e+03 ...
+    16.1925 0.0435 95.8932 1.2528];
 
 Tf = geyer_imse(unburnedsamples);
 Tf = sort(Tf);
@@ -30,12 +33,20 @@ for i = 1:size(ind,1)
     subplot(8,16,subind(i,:))
     p = gkde2([downburned(:,ind(i,2)) downburned(:,ind(i,1))]);
     contour(p.x,p.y,p.pdf,1000)
-    
+    ca = axis; 
+    if ind(i,2) == 8 
+        axis([ca(1) 2.5 ca(3) ca(4)])
+    end
+    if ind(i,2) == 5
+        axis([8 ca(2) ca(3) ca(4)])
+    end
+    hold on ; 
+    scatter(mbest(ind(i,2)),mbest(ind(i,1)),'m*','Linewidth',5)
 end
 colormap(slipcolor)
 
 indhist = [1 2;3 4; 5 6; 7 8; 9 10 ; 11 12; 13 14; 15 16];
-bins = 500;
+bins = 3000;
 lab = ['X west [km]','Y west [km]','X east [km]','Y east [km]',...
     'width [km]','depth [km]','Dip [\circ]','strike-slip [m]'];
 
@@ -44,19 +55,34 @@ sz=10;
 for i=1:length(indhist)
     subplot(8,16,indhist(i,:))
     
-    [nx,ny]= hist(downburned(:,i),bins);
+    [nx,ny]= hist(unburnedsamples(:,i),bins,'color','k');
     plot(ny,nx)
     set(gca,'YTickLabel',[]);
     axis([min(ny) max(ny) min(nx) max(nx)])
     title(lab(labind(i,1):labind(i,2)))
     
+    line([mbest(i) mbest(i)],[min(nx) max(nx)],'color','r','Linewidth',2)
+    prc_samp = prctile(downburned(:,i),[2.5 97.5]);
+    line([prc_samp(1) prc_samp(1)],[min(nx) max(nx)],'color','b','Linewidth',2)
+    line([prc_samp(2) prc_samp(2)],[min(nx) max(nx)],'color','b','Linewidth',2)
+    
+    if i ==5
+        ca = axis;
+        axis([7 ca(2) ca(3) ca(4)])
+    end
+    
+    if i ==8
+        ca = axis;
+        axis([ca(1) 2.6 ca(3) ca(4)])
+    end
+    
     set(gca,'FontSize',sz);
-xl=get(gca,'xlabel');
-set(xl,'FontSize',sz);
-yl=get(gca,'ylabel');
-set(yl,'FontSize',sz);
-tl=get(gca,'title');
-set(tl,'FontSize',sz);
+    xl=get(gca,'xlabel');
+    set(xl,'FontSize',sz);
+    yl=get(gca,'ylabel');
+    set(yl,'FontSize',sz);
+    tl=get(gca,'title');
+    set(tl,'FontSize',sz);
 end
 
 %subplot(8,8,42)
@@ -86,10 +112,13 @@ momnls= 2.5 *m(1)*m(2)*abs(m(8))*1e23;
 Mwnls = 2/3* log10(momnls) - 10.7;
 
 subplot(8,16,[83 84])
-[nx,ny]=hist(Mw,bins);
+[nx,ny]=hist(Mw+.027,bins);
 plot(ny,nx)
 set(gca,'YTickLabel',[]);
 xlabel('Moment magnitude')
+ca = axis;
+
+axis([6.52 6.63 0 1500])
 
 sz =14;
 set(gca,'FontSize',sz);
