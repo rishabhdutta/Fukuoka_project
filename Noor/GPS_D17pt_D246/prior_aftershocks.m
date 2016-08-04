@@ -12,18 +12,20 @@ function final = prior_aftershocks(trian,Lat,Lon,depth)
 P1 = trian(1,:); P2 = trian(2,:); P3 = trian(3,:);
 
 normal = cross(P1-P2, P1-P3);
-syms x y z
-P = [x,y,z];
-planefunction = dot(normal, P-P1);
+A = normal(1); B = normal(2); C = normal(3);
+D = -dot(normal,P2);
+% syms x y z
+% P = [x,y,z];
+% planefunction = dot(normal, P-P1);
+% 
+% realdot = @(u, v) u*transpose(v);
+% planefunction = realdot(P-P1,normal);
+% planefunc = matlabFunction(planefunction);
 
-realdot = @(u, v) u*transpose(v);
-planefunction = realdot(P-P1,normal);
-planefunc = matlabFunction(planefunction);
-
-D = planefunc(0,0,0); 
-A = planefunc(1,0,0) - D ; 
-B = planefunc(0,1,0) - D ;
-C = planefunc(0,0,1) - D ; 
+% D = planefunc(0,0,0); 
+% A = planefunc(1,0,0) - D ; 
+% B = planefunc(0,1,0) - D ;
+% C = planefunc(0,0,1) - D ; 
 
 noEQ = length(Lat); 
 
