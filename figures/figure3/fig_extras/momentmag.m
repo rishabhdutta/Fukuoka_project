@@ -5,7 +5,7 @@ function out = momentmag(in);
 
 nls = in;  
 
-rig = 2.6e10; % shear modulus
+rig = 2.5e10; % shear modulus
 slipmag = sqrt( nls(:,8).^2 + nls(:,9).^2 ); % slip magnitude
   
 gmom = nls(:,1).* nls(:,2).* 1e6 .* slipmag;

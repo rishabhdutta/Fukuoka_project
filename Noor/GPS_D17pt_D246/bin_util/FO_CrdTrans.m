@@ -29,9 +29,9 @@ end
 axesm utm
 
 % Fukuoka UTM zone:
-zone = '52S';
-
-axesm('mapprojection','utm','zone',zone);
+ zone = '52S';
+% 
+ axesm('mapprojection','utm','zone',zone);
 
 if fwd == 1
   % Transform coordinates to UTM
