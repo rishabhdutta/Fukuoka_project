@@ -1,4 +1,4 @@
-%%
+%% Figure5
 
 % plot the samples and compare 
 clear; close all; clc
