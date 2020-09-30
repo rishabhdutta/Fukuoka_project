@@ -58,7 +58,7 @@ hold on ;
 [nx1,ny1] = hist(moment_no_prior,nos);
 plot(ny1,nx1,'b','Linewidth',2)
 
-[nx2,ny2] = hist(moment_mag_prior+.02,nos);
+[nx2,ny2] = hist(moment_mag_prior,nos);
 plot(ny2,nx2,'g','Linewidth',2)
 
 [nx3,ny3] = hist(moment_AS_prior,nos);
