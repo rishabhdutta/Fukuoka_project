@@ -1,0 +1,6 @@
+I am not searching for hyperparameters in this study. 
+How are hyperparameters chosen? I run the Metropolis with many arbitrarily chosen values 
+Of hyperaparameters and do a visual analysis of the model marginals. 
+Due to different values of hyperparameters, I have marginals with priors not always narrower (low std) than without using prior.   
+
+You might see that it's extremely hard coded. Sorry for that. 
