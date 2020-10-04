@@ -3,4 +3,21 @@ How are hyperparameters chosen? I run the Metropolis with many arbitrarily chose
 Of hyperaparameters and do a visual analysis of the model marginals. 
 Due to different values of hyperparameters, I have marginals with priors not always narrower (low std) than without using prior.   
 
-You might see that it's extremely hard coded. Sorry for that. 
+You might see that it's extremely hard coded. Sorry for that.
+
+Some info on the paths: 
+
+go to Noor > GPS_D17pt_D246 
+This folder is for results using all the datasets available: GPS + 2 tracks of InSAR
+
+Under this folder, you will find the folders : 'no_priors', 'prios_AS', 'prior_mag', 'prior_mag_AS', that are without any priors, with aftershock locations prior, with moment magnitude prior, with both priors 
+
+If you go to prior_mag_AS 
+run_nice_bayesian_med.m is the main script. It runs parallel 10 chains (wsize in script) of MCMC 
+You will see the postfunc_med.m being used to determine the posterior. 
+
+The same is for all the other folders e.g. no_priors 
+
+There is one mistake you should avoid: when the model parameters are not within bounds, set the logposterior to -inf and not 1e-50 like in the script. 
+
+EMail me for further clarifications: rishabh-dutta@uiowa.edu  
